@@ -1,0 +1,16 @@
+name: PR Tests
+on:
+  pull_request:
+    paths:
+      - '**'
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Run CI
+        run: bash ./scripts/ci.sh
+      - name: Upload coverage
+        run: bash <(curl -s https://codecov.io/bash)
